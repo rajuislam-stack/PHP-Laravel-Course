@@ -1,0 +1,42 @@
+# Laravel / PHP
+.env
+.env.*
+!.env.example
+
+/vendor/
+
+# Node
+node_modules/
+
+# Laravel generated files
+/public/build/
+/public/hot/
+/storage/*.key
+/storage/framework/
+/storage/logs/
+
+# Local SQLite database
+/database/*.sqlite
+/database/*.sqlite3
+
+# Testing / cache
+.phpunit.cache/
+
+# IDE / Editor
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# NPM logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Composer
+auth.json
