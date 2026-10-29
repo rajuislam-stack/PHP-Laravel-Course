@@ -21,7 +21,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["myemail"])){
     echo "Invalid email <br>";  //Form Validation
   }
   else{
-    $email = htmlspecialchars($_POST['myemail']);  
+    // $email = htmlspecialchars($_POST['myemail']);
+    $email = filter_var($_POST['myemail'], FILTER_SANITIZE_EMAIL);
   }
 
 

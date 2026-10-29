@@ -257,6 +257,7 @@ function sum1(){
 
 sum1() ;
 echo $GLOBALS['sum'] . "<br>";
+echo $sum . "<br>";
 
 
 
@@ -271,15 +272,15 @@ echo $_SERVER["REQUEST_METHOD"];    //$_SERVER
 echo "<br>";
 
 
-if($_SERVER["REQUEST_METHOD"] == 'POST'){
-  echo "Username: " . $_REQUEST['username'] . "<br>";
-  echo "Password: " . $_POST['password'] . "<br>";
-  echo "It's a post method <br>";
-}
-else{
-  echo "Password: " . $_GET['password'] . "<br>";
-  echo "It's get method. <br>";
-}
+// if($_SERVER["REQUEST_METHOD"] == 'POST'){
+//   echo "Username: " . $_REQUEST['username'] . "<br>";
+//   echo "Password: " . $_POST['password'] . "<br>";
+//   echo "It's a post method <br>";
+// }
+// else{
+//   echo "Password: " . $_GET['password'] . "<br>";
+//   echo "It's get method. <br>";
+// }
 
 
 
@@ -310,7 +311,7 @@ echo "<br>";
 
 
 $pattern2 = '/mango/i';
-$text2 = "Apple, Banana, Mango <br>";
+$text2 = "Apple, Banana, Mango  mango<br>";
 
 $replaceText = preg_replace($pattern2,'Jackfruit', $text2);
 echo $replaceText;
@@ -366,6 +367,218 @@ echo "<br>";
  //Chapter-18: PHP Form Validation
 
 
+$email1 =  'lifes@gmail.com<br>';
+echo filter_var($email1,FILTER_SANITIZE_EMAIL);
+echo "<br>";
+
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+  $username = $_REQUEST["username"];
+  $password = $_POST["password"];
+  $age = $_POST['age'];
+  $url = $_POST['url'];
+  $paragraph = $_POST['paragraph'];
+  $email = $_POST['email'];
+
+  if(strlen($username) < 3 || strlen($username) > 50){  //String length Validation
+    echo "Username must be between 3 to 50 charecters. <br>";
+  }
+  else echo "Username: $username <br>";
+
+ 
+  if(filter_var($age, FILTER_VALIDATE_INT) === false){  
+    echo "Age must be a number <br>"; //Number Validation
+  }
+  else echo "Age: $age <br>";
+
+ 
+  
+  if(!filter_var($url, FILTER_VALIDATE_URL)){
+    echo "Invalid url! <br>";     //Url Validation
+  }
+  else echo "Url: $url <br>";
+
+
+  if(!preg_match("/^[a-zA-Z0-9]+$/", $paragraph)){
+    echo "Only letters and digit allowed. <br>"; //Custom RegEx Validation
+  }
+  else echo "Paragraph: $paragraph <br>"; 
+
+
+  if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+    echo "Invalid Email <br>";  //Email Validation
+  }
+  else echo "Email: $email <br>";
+  
+
+    // Sanitizing User Input
+  
+  echo htmlspecialchars($username);
+  echo "<br>";
+
+  echo filter_var($email, FILTER_SANITIZE_EMAIL);
+  echo "<br>";
+
+   echo filter_var($url, FILTER_SANITIZE_URL);
+   echo "<br>";
+
+   echo filter_var($age, FILTER_SANITIZE_NUMBER_INT);
+   echo "<br>";
+
+}
+
+
+
+//Chapter-19: PHP Form Required Fields Validation
+
+// $usernameErr = $passwordErr = $ageErr = '';
+
+// if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+//   if(empty($_POST['username'])){
+//    $usernameErr = "Username is required.";
+//   }
+  
+
+//   if(empty($_POST['password'])){
+//     $passwordErr = "Password is required.";
+//   }
+
+//   if(empty($_POST['age'])){
+//     $ageErr = "Age is required.";
+//   }
+
+// }
+
+
+
+
+//Chapter-20: PHP Forms - Validate E-mail and URL
+
+ 
+$email1 = 'life@gmail.com';
+
+if(filter_var($email1, FILTER_VALIDATE_EMAIL)){
+   echo "Valid email.<br>";
+}
+else{
+  echo "Invalid email.<br>";
+}
+
+$url1 = "https://codejogot.com";
+
+if(filter_var($url1, FILTER_VALIDATE_URL)){
+  echo "Valid url.<br>";
+}
+else{
+  echo "Invalid url.<br>";
+}
+
+
+$url2 = "https://codejogot.com <script>dl</script>";
+
+echo filter_var($url2, FILTER_SANITIZE_URL) . "<br>";
+
+
+//Chapter-21: PHP Date and Time
+
+
+  //1.date(format, timestamp) function
+
+echo date("Y-m-d H-i-s");   
+echo "<br>";
+
+ //Common date format
+
+echo date('Y, y, m,F, d,l, H,h, i, s ');
+echo "<br>";
+
+echo "Today is: ". date("l, d F Y");
+echo "<br>";
+
+
+  //2. time() function
+
+echo time();      //UNIX timestamp
+echo "<br>";
+
+
+$new_time = time() + (60 * 60);   //1 hour +
+
+echo date("Y-m-d H:i:s", $new_time);
+echo "<br>";
+
+
+date_default_timezone_set("Asia/Dhaka");
+
+echo date("l-F-Y H:i:s");    //Set timezone
+echo "<br>";
+
+
+echo date_default_timezone_get(); //Get timezone
+echo "<br>";
+
+
+print_r(timezone_identifiers_list()[418]);
+echo "<br>";
+
+
+
+  //Formatting date and time
+
+
+echo date("l, F jS, Y");
+echo "<br>";
+
+echo date("h:i A");
+echo "<br>";
+
+
+ //PHP strtotime() Function
+
+
+$timestamp1 = strtotime("next day");
+echo date('m-d-Y', $timestamp1);
+echo "<br>";
+
+
+$timestamp2 = strtotime("+3 days");
+echo date("m-d-Y", $timestamp2);
+echo "<br>";
+
+
+echo time();
+echo "<br>";
+
+echo strtotime('+28 day');
+echo "<br>";
+
+
+echo date("m-d-Y", strtotime("-2 weeks"));
+echo "<br>";
+
+
+  //Date time class
+
+  $date1 = new DateTime();
+ echo $date1 -> format("Y-m-d h:i:s");
+ echo "<br>";
+
+
+ $date2 = new DateTime();
+ $date2 -> modify("+5 days");
+ echo $date2->format("Y-m-d");
+ echo "<br>";
+
+
+ $date3 = new DateTime("2026-10-20");
+ $date4 = new DateTime("2026-10-25");
+ $diff = $date3->diff($date4);
+ echo "Different is: " . $diff->days . " days";
+ echo "<br>";
+
+
 
 
 ?>
@@ -383,12 +596,21 @@ echo "<br>";
   
 <h1>$_REQUEST</h1>
  
-<form method="GET" >
-  <input type="text" name="username"> <br> <br>
+<form method="POST" >
+ username: <input type="text" name="username"> <br>
+ <span><?php echo $usernameErr ?></span> <br><br>
 
-  <input type="password" name="password">
+ password: <input type="password" name="password"><br> 
+ <span><?php echo $passwordErr?></span><br><br>
 
- 
+ age:  <input type="text" name="age">  <br> 
+ <span><?php echo $ageErr?> </span><br><br>
+
+ url: <input type="text" name="url"> <br> <br>
+
+ paragraph: <input type="text" name="paragraph"> <br> <br>
+
+ email: <input type="text" name="email"> <br> <br>
 
   <input type="submit" value="Submit">
 </form>

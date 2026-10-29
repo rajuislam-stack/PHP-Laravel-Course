@@ -173,7 +173,7 @@ echo "You enter name: $name <br>";
 echo "You enter email: $email <br>";
 
 
-//Chapter-18:PHP Form Validation  //Chapter-19: PHP Form Required Fields Validation //Chapter-20: PHP Forms Validate-Email & URL
+//Chapter-18: PHP Form Validation  //Chapter-19: PHP Form Required Fields Validation //Chapter-20: PHP Forms Validate-Email & URL
 
 
  //Chapter-21: PHP Date and Time
